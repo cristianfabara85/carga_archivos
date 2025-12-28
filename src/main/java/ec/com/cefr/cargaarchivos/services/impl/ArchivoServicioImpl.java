@@ -2,6 +2,7 @@ package ec.com.cefr.cargaarchivos.services.impl;
 
 import ec.com.cefr.cargaarchivos.models.Campania;
 import ec.com.cefr.cargaarchivos.models.CampaniaDto;
+import ec.com.cefr.cargaarchivos.models.PresupuestoAgrupadoEmpresaDto;
 import ec.com.cefr.cargaarchivos.repositories.ArchivoRepository;
 import ec.com.cefr.cargaarchivos.services.ArchivoServicio;
 import jakarta.ejb.Stateless;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Stateless
@@ -70,6 +72,20 @@ public class ArchivoServicioImpl implements ArchivoServicio {
     @Override
     public List<Campania> listar() {
         return archivoRepository.findAll();
+    }
+
+    @Override
+    public List<PresupuestoAgrupadoEmpresaDto> listarAgrupadoEmpresa() {
+        List<PresupuestoAgrupadoEmpresaDto> presupuestos=new ArrayList<>();
+        Map<String,Double> resp= archivoRepository.findAll().stream().collect(Collectors.groupingBy(Campania::getNombreEmpresa,
+                    Collectors.summingDouble(Campania::getPresupuesto)));
+            resp.forEach((s, aDouble) -> {
+                PresupuestoAgrupadoEmpresaDto item=new PresupuestoAgrupadoEmpresaDto(
+                s,
+                aDouble);
+                presupuestos.add(item);
+            });
+        return presupuestos;
     }
 
     private String validarCampos(String[] linea) {

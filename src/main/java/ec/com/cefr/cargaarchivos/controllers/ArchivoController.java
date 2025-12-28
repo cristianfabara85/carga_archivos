@@ -20,4 +20,9 @@ public class ArchivoController {
         return Response.ok(archivoServicio.listar()).build();
     }
 
+    @GET()
+    @Path("/grouped")
+    public Response listarAgrupadoEmpresa() {
+        return Response.ok(archivoServicio.listarAgrupadoEmpresa()).build();
+    }
 }
