@@ -8,7 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 @ApplicationPath("/api")
 public class CsvApplication extends ResourceConfig {
     public CsvApplication() {
-        packages("ec.com.cefr.cargaarchivos");
+        packages("ec.com.cefr.cargaarchivos.controllers");
         register(MultiPartFeature.class);
     }
 }

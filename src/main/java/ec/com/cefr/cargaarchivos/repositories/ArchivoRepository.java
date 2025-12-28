@@ -17,7 +17,7 @@ public class ArchivoRepository  {
         em.persist(campania);
     }
 
-    public List<Campania> findAll(Campania campania){
+    public List<Campania> findAll(){
        return em.createQuery("select  c from Campania c",Campania.class).getResultList();
     }
 

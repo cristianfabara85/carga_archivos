@@ -33,12 +33,12 @@ public class ArchivoServicioImpl implements ArchivoServicio {
         List<Campania> campanias= new ArrayList<>();
 
         BufferedReader reader= new BufferedReader(new InputStreamReader(file, StandardCharsets.UTF_8));
+        String row;
+        while ((row = reader.readLine()) != null) {
 
-        reader.lines().forEach(row->{
+            row=row.replace("\uFEFF","").trim();
 
-            row.replace("\uFEFF","").trim();
-
-            String[] linea= row.split(",");
+            String[] linea= row.split(",", -1);
             if(linea.length!=8){
                 throw new RuntimeException("Formato de archivo Invalido");
             }
@@ -56,7 +56,7 @@ public class ArchivoServicioImpl implements ArchivoServicio {
             }
 
 
-        });
+        }
 
             campanias.forEach(camp->{
                 archivoRepository.save(camp);
@@ -67,26 +67,32 @@ public class ArchivoServicioImpl implements ArchivoServicio {
         return response;
     }
 
+    @Override
+    public List<Campania> listar() {
+        return archivoRepository.findAll();
+    }
+
     private String validarCampos(String[] linea) {
         String valido="";
 
-        if(!linea[1].matches("\\d+"))
+        if(!linea[0].matches("\\d+"))
             valido=" \t,Código de campaña inválido";
 
-        if(!linea[2].matches("[a-zA-Z]{1,5}"))
+        if(!linea[1].matches("[a-zA-Z]{1,5}"))
             valido="\t ,Acrónimo inválido";
 
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-dd-MM");
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(Boolean.FALSE);
         try {
-           sdf.parse(linea[6]);
+           sdf.parse(linea[5]);
         } catch (Exception e) {
             throw new RuntimeException(" \t ,Formato de fecha inválido");
         }
 
-        if(!linea[7].matches("\\d+"))
+        if(!linea[6].matches("\\d+"))
             valido="\t ,Número de clientes inválido";
 
-        if(!linea[8].matches("\\d+(\\.\\d+)?"))
+        if(!linea[7].matches("\\d+(\\.\\d+)?"))
             valido="\t ,Presupuesto inválido";
 
         return valido;
@@ -95,15 +101,15 @@ public class ArchivoServicioImpl implements ArchivoServicio {
 
     private Campania armarCampania(String[] linea) throws ParseException {
         Campania campania= new Campania();
-        campania.setCodigoCampania(Long.valueOf(linea[1]));
-        campania.setAcronimo(linea[2]);
-        campania.setRuc(linea[3]);
-        campania.setNombreEmpresa(linea[4]);
-        campania.setDescripcion(linea[5]);
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-dd-MM");
-        campania.setFecha(sdf.parse(linea[6]));
-        campania.setNumeroClientes(Integer.valueOf(linea[7]));
-        campania.setPresupuesto(Double.valueOf(linea[8]));
+        campania.setCodigoCampania(Long.valueOf(linea[0]));
+        campania.setAcronimo(linea[1]);
+        campania.setRuc(linea[2]);
+        campania.setNombreEmpresa(linea[3]);
+        campania.setDescripcion(linea[4]);
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+        campania.setFecha(sdf.parse(linea[5]));
+        campania.setNumeroClientes(Integer.valueOf(linea[6]));
+        campania.setPresupuesto(Double.valueOf(linea[7]));
         return campania;
     }
 }
