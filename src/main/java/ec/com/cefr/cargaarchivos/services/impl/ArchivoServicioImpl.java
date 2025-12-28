@@ -63,7 +63,7 @@ public class ArchivoServicioImpl implements ArchivoServicio {
             campanias.forEach(camp->{
                 archivoRepository.save(camp);
             });
-            response.setCampanias(campanias.stream().sorted(Comparator.comparing(Campania::getPresupuesto)).collect(Collectors.toList()));
+            response.setCampanias(campanias.stream().sorted(Comparator.comparingDouble(Campania::getPresupuesto)).collect(Collectors.toList()));
             response.setTotalPresupuesto(campanias.stream().map(Campania::getPresupuesto).reduce(0.0,Double::sum));
 
         return response;
