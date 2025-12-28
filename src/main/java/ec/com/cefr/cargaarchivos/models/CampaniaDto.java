@@ -1,9 +1,8 @@
-package ec.com.cefr.carga_archivos.models;
+package ec.com.cefr.cargaarchivos.models;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -11,6 +10,6 @@ import java.util.List;
 public class CampaniaDto {
 
     private List<Campania> campanias;
-    private BigDecimal totalPresupuesto;
+    private Double totalPresupuesto;
 
 }

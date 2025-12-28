@@ -1,4 +1,4 @@
-package ec.com.cefr.carga_archivos.models;
+package ec.com.cefr.cargaarchivos.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -6,15 +6,16 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
-@Entity(name="campania")
+@Entity
+@Table(name="campania")
 public class Campania {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -39,7 +40,8 @@ public class Campania {
     private String descripcion;
 
     @Column(name = "fecha")
-    private LocalDate fecha;
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
 
     @Column(name = "numero_clientes")
     private Integer numeroClientes;

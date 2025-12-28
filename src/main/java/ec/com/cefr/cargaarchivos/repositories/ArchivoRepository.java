@@ -1,6 +1,6 @@
-package ec.com.cefr.carga_archivos.repositories;
+package ec.com.cefr.cargaarchivos.repositories;
 
-import ec.com.cefr.carga_archivos.models.Campania;
+import ec.com.cefr.cargaarchivos.models.Campania;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -18,11 +18,11 @@ public class ArchivoRepository  {
     }
 
     public List<Campania> findAll(Campania campania){
-       return em.createQuery("select  c from campania c",Campania.class).getResultList();
+       return em.createQuery("select  c from Campania c",Campania.class).getResultList();
     }
 
     public List<Campania> findById(Integer id){
-        return em.createQuery("select  c from campania c where c.codigoCampania =:id",Campania.class).setParameter("id",id).getResultList();
+        return em.createQuery("select  c from Campania c where c.codigoCampania =:id",Campania.class).setParameter("id",Long.valueOf(id)).getResultList();
     }
 
 }

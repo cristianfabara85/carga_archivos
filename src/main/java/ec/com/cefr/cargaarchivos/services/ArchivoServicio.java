@@ -1,6 +1,6 @@
-package ec.com.cefr.carga_archivos.services;
+package ec.com.cefr.cargaarchivos.services;
 
-import ec.com.cefr.carga_archivos.models.CampaniaDto;
+import ec.com.cefr.cargaarchivos.models.CampaniaDto;
 
 import java.io.IOException;
 import java.io.InputStream;

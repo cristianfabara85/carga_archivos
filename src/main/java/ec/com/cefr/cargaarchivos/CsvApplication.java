@@ -1,4 +1,4 @@
-package ec.com.cefr.carga_archivos;
+package ec.com.cefr.cargaarchivos;
 
 import jakarta.ws.rs.ApplicationPath;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -8,7 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 @ApplicationPath("/api")
 public class CsvApplication extends ResourceConfig {
     public CsvApplication() {
-        packages("ec.com.cefr.carga_archivos");
+        packages("ec.com.cefr.cargaarchivos");
         register(MultiPartFeature.class);
     }
 }

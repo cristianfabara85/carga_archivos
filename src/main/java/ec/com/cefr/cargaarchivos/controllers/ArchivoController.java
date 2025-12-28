@@ -1,6 +1,6 @@
-package ec.com.cefr.carga_archivos.controllers;
+package ec.com.cefr.cargaarchivos.controllers;
 
-import ec.com.cefr.carga_archivos.services.impl.ArchivoServicioImpl;
+import ec.com.cefr.cargaarchivos.services.ArchivoServicio;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -19,7 +19,7 @@ import java.io.InputStream;
 public class ArchivoController {
 
     @Inject
-    private ArchivoServicioImpl archivoServicio;
+    private ArchivoServicio archivoServicio;
 
     @POST
     @Path("/upload")
