@@ -11,5 +11,6 @@ public class CampaniaDto {
 
     private List<Campania> campanias;
     private Double totalPresupuesto;
+    private String error;
 
 }

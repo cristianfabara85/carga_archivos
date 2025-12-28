@@ -14,6 +14,7 @@ import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 @WebServlet("/api/campania/upload")
 @MultipartConfig
@@ -32,10 +33,16 @@ public class UploadFileServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Archivo no enviado");
             return;
         }
-
+        CampaniaDto result;
+        resp.setContentType("application/json");
         try (InputStream file = filePart.getInputStream()) {
-            CampaniaDto result = archivoServicio.cargarArchivo(file);
-            resp.setContentType("application/json");
+            result = archivoServicio.cargarArchivo(file);
+            resp.getWriter().write(new ObjectMapper().writeValueAsString(result));
+        } catch (Exception e) {
+            result= new CampaniaDto();
+            result.setCampanias(new ArrayList<>());
+            result.setTotalPresupuesto(0.0);
+            result.setError(e.getCause().getMessage());
             resp.getWriter().write(new ObjectMapper().writeValueAsString(result));
         }
     }
